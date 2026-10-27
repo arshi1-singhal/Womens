@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Her Voice"
+description = "A privacy-minded support website where women can share stories anonymously, find practical safety guidance, and access region-appropriate help resources."
+version = "1.0.0"
+id = "artifacts/her-voice"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24547
+
+[services.development]
+run = "pnpm --filter @workspace/her-voice run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/her-voice", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/her-voice/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24547"
+BASE_PATH = "/"

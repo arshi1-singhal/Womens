@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: stories
+    description: Anonymous community stories and supportive replies
 paths:
   /healthz:
     get:
@@ -24,6 +26,147 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /stories:
+    get:
+      operationId: listStories
+      tags: [stories]
+      summary: List anonymous community stories
+      parameters:
+        - name: topic
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [all, confidence, relationships, work, wellbeing, safety]
+      responses:
+        "200":
+          description: Stories ordered by recent activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Story"
+    post:
+      operationId: createStory
+      tags: [stories]
+      summary: Share an anonymous story
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoryInput"
+      responses:
+        "201":
+          description: Story created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+  /stories/overview:
+    get:
+      operationId: getStoriesOverview
+      tags: [stories]
+      summary: Get community story totals
+      responses:
+        "200":
+          description: Community totals
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoriesOverview"
+  /stories/{id}:
+    get:
+      operationId: getStory
+      tags: [stories]
+      summary: Get a story and its counts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Story details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "404":
+          description: Story not found
+  /stories/{id}/support:
+    post:
+      operationId: supportStory
+      tags: [stories]
+      summary: Send an anonymous supportive reaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Updated story
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "404":
+          description: Story not found
+  /stories/{id}/replies:
+    get:
+      operationId: listStoryReplies
+      tags: [stories]
+      summary: List supportive replies for a story
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Replies ordered from oldest to newest
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StoryReply"
+        "404":
+          description: Story not found
+    post:
+      operationId: createStoryReply
+      tags: [stories]
+      summary: Add an anonymous supportive reply
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoryReplyInput"
+      responses:
+        "201":
+          description: Reply created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoryReply"
+        "404":
+          description: Story not found
 components:
   schemas:
     HealthStatus:
@@ -33,4 +176,45 @@ components:
           type: string
       required:
         - status
+    Story:
+      type: object
+      required: [id, title, content, topic, createdAt, supportCount, replyCount]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        content: { type: string }
+        topic:
+          type: string
+          enum: [confidence, relationships, work, wellbeing, safety]
+        createdAt: { type: string, format: date-time }
+        supportCount: { type: integer }
+        replyCount: { type: integer }
+    StoryInput:
+      type: object
+      required: [title, content, topic]
+      properties:
+        title: { type: string, minLength: 4, maxLength: 100 }
+        content: { type: string, minLength: 20, maxLength: 4000 }
+        topic:
+          type: string
+          enum: [confidence, relationships, work, wellbeing, safety]
+    StoryReply:
+      type: object
+      required: [id, storyId, content, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        storyId: { type: string, format: uuid }
+        content: { type: string }
+        createdAt: { type: string, format: date-time }
+    StoryReplyInput:
+      type: object
+      required: [content]
+      properties:
+        content: { type: string, minLength: 2, maxLength: 1500 }
+    StoriesOverview:
+      type: object
+      required: [storyCount, replyCount]
+      properties:
+        storyCount: { type: integer }
+        replyCount: { type: integer }
 
