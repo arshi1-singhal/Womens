@@ -81,7 +81,7 @@ function Shell({ children }: { children: ReactNode }) {
               <HeartHandshake size={20} />
             </span>
             <span>
-              her voice<span className="brand-period">.</span>
+              shree<span className="brand-period">.</span>
             </span>
           </Link>
           <nav
@@ -131,7 +131,7 @@ function Shell({ children }: { children: ReactNode }) {
               <HeartHandshake size={18} />
             </span>
             <span>
-              her voice<span className="brand-period">.</span>
+              shree<span className="brand-period">.</span>
             </span>
           </Link>
           <span className="footer-note">A softer place to be heard.</span>
@@ -932,7 +932,7 @@ function Help() {
               url: mapUrl,
             });
             setMessage(
-              "The maps link was shared using your device. Her Voice did not send or save your location.",
+              "The maps link was shared using your device. Shree did not send or save your location.",
             );
           } catch (err) {
             if (err instanceof Error && err.name === "AbortError")
@@ -943,7 +943,7 @@ function Help() {
           try {
             await navigator.clipboard.writeText(mapUrl);
             setMessage(
-              "Maps link copied. Share it with someone you trust. Her Voice did not send or save your location.",
+              "Maps link copied. Share it with someone you trust. Shree did not send or save your location.",
             );
           } catch {
             setMessage(`Copy this maps link to share it: ${mapUrl}`);
@@ -996,7 +996,7 @@ function Help() {
                 <Check size={15} /> Only after you tap and allow it
               </div>
               <div>
-                <Check size={15} /> Never saved by Her Voice
+                <Check size={15} /> Never saved by Shree
               </div>
               <div>
                 <Check size={15} /> No ongoing location access
@@ -1063,20 +1063,74 @@ function Help() {
             </ul>
           </aside>
         </div>
-        <section className="helpline-note">
-          <span className="helpline-mark">
-            <AlertCircle size={19} />
-          </span>
-          <div>
-            <strong>About emergency numbers</strong>
+        <section className="helpline-section" aria-labelledby="helpline-title">
+          <div className="helpline-heading">
+            <span className="mini-label">India · trusted support lines</span>
+            <h2 id="helpline-title" className="serif">
+              Help is <em>within reach.</em>
+            </h2>
             <p>
-              Emergency and helpline numbers depend on your country and region.
-              We have not verified local numbers yet, so please confirm the
-              right number for your country before relying on it. If you are in
-              immediate danger, use a trusted local emergency resource if it is
-              safe to do so.
+              If you are in immediate danger and it is safe to call, contact
+              emergency services directly.
             </p>
           </div>
+          <div className="helpline-grid">
+            <a className="helpline-card helpline-card-emergency" href="tel:112">
+              <span className="helpline-type">National emergency response</span>
+              <strong className="helpline-number">112</strong>
+              <span className="helpline-detail">
+                Emergency support across India
+              </span>
+              <span className="helpline-source">Government source: NCW</span>
+            </a>
+            <a className="helpline-card" href="tel:181">
+              <span className="helpline-type">Women Helpline</span>
+              <strong className="helpline-number">181</strong>
+              <span className="helpline-detail">
+                24-hour women’s support and information
+              </span>
+              <span className="helpline-source">Government source: WCD</span>
+            </a>
+            <a className="helpline-card" href="tel:14490">
+              <span className="helpline-type">
+                National Commission for Women
+              </span>
+              <strong className="helpline-number">14490</strong>
+              <span className="helpline-detail">NCW 24×7 Women Helpline</span>
+              <span className="helpline-source">Government source: NCW</span>
+            </a>
+          </div>
+          <section className="helpline-note">
+            <span className="helpline-mark">
+              <AlertCircle size={19} />
+            </span>
+            <div>
+              <strong>Check local availability</strong>
+              <p>
+                The Ministry of Women and Child Development reports that 181 is
+                operational in all States and Union Territories except West
+                Bengal. If you are in West Bengal, call 112 for emergencies and
+                consult local government support services for women. Verify
+                details with the official sources:{" "}
+                <a
+                  href="https://www.wcd.gov.in/public/offerings/women--helpline--scheme"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Ministry of Women and Child Development
+                </a>{" "}
+                and{" "}
+                <a
+                  href="https://www.ncw.gov.in/other-useful-helplines"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  National Commission for Women
+                </a>
+                .
+              </p>
+            </div>
+          </section>
         </section>
         <div className="help-end">
           <span>Whatever you choose next, it belongs to you.</span>

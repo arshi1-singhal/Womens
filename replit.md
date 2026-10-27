@@ -1,6 +1,6 @@
-# [Project name]
+# Shree
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+An anonymous community for women to share stories, encourage one another, and find safety resources.
 
 ## Run & Operate
 
@@ -30,7 +30,7 @@ _Populate as you build — non-obvious choices a reader couldn't infer from the 
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Shree lets visitors read and share public stories anonymously, add supportive replies, find practical safety guidance, and create a location map link only after choosing to share their browser location. The help page lists India helplines with local availability notes.
 
 ## User preferences
 
